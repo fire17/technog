@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#1d1660">
+<title>טכנוג · טיפ ביום</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#0d0b2e; --bg2:#1d1660; --card:rgba(255,255,255,.08); --line:rgba(255,255,255,.14);
+    --ink:#f4f2ff; --muted:#b9b3e6; --a:#6ee7ff; --b:#a78bfa; --c:#ff7ab6; --ok:#7cf29c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg1);color:var(--ink);font-family:Rubik,system-ui,sans-serif}
+  body{min-height:100vh;background:radial-gradient(1200px 600px at 80% -10%,#3b2a9e 0%,transparent 60%),radial-gradient(900px 500px at -10% 110%,#7a1f6b 0%,transparent 55%),linear-gradient(180deg,var(--bg1),var(--bg2));overflow-x:hidden}
+  .stars{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(2px 2px at 20% 30%,#fff8 50%,transparent 51%),radial-gradient(1.5px 1.5px at 70% 20%,#fff6 50%,transparent 51%),radial-gradient(1px 1px at 40% 80%,#fff7 50%,transparent 51%),radial-gradient(2px 2px at 85% 65%,#fff5 50%,transparent 51%),radial-gradient(1px 1px at 10% 90%,#fff6 50%,transparent 51%);animation:tw 6s ease-in-out infinite alternate}
+  @keyframes tw{to{opacity:.4}}
+  .wrap{max-width:560px;margin:0 auto;padding:20px 16px 110px;position:relative}
+  header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .logo{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:28px;background:linear-gradient(135deg,var(--a),var(--b) 55%,var(--c));box-shadow:0 8px 30px #a78bfa66}
+  h1{font-size:30px;font-weight:800;letter-spacing:.5px;background:linear-gradient(90deg,var(--a),var(--b),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--muted);font-size:14px}
+  .streak{margin-inline-start:auto;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 10px;font-size:12px;color:var(--muted)}
+  .streak b{display:block;font-size:20px;color:#ffd166}
+  .hero{position:relative;border-radius:24px;padding:22px;background:linear-gradient(160deg,#ffffff1a,#ffffff08);border:1px solid var(--line);backdrop-filter:blur(8px);box-shadow:0 20px 60px #0006;overflow:hidden}
+  .hero::after{content:"";position:absolute;inset:-40% -20% auto auto;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,#6ee7ff44,transparent 70%)}
+  .tag{display:inline-flex;gap:6px;align-items:center;font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px;background:#6ee7ff22;color:var(--a);border:1px solid #6ee7ff55}
+  .num{font-size:13px;color:var(--muted);margin-top:14px}
+  .tip{font-size:22px;line-height:1.5;font-weight:600;margin-top:6px;min-height:100px}
+  .emoji{font-size:54px;position:absolute;left:18px;bottom:14px;filter:drop-shadow(0 6px 14px #0008);animation:bob 3s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-8px) rotate(-6deg)}}
+  .row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+  button{font-family:inherit;cursor:pointer;border:0;border-radius:14px;padding:12px 16px;font-size:16px;font-weight:600;color:#120d3a;background:linear-gradient(135deg,var(--a),var(--b));box-shadow:0 6px 18px #6ee7ff44;transition:transform .15s}
+  button:active{transform:scale(.96)}
+  button.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:none}
+  button.liked{background:linear-gradient(135deg,#ff7ab6,#ffb86b)}
+  h2{font-size:18px;margin:28px 0 12px}
+  .cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+  .cat{flex:0 0 auto;padding:8px 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:14px;cursor:pointer;color:var(--ink)}
+  .cat.on{background:linear-gradient(135deg,#6ee7ff33,#a78bfa33);border-color:#a78bfa}
+  .list{display:grid;gap:10px;margin-top:12px}
+  .item{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:16px;background:var(--card);border:1px solid var(--line);cursor:pointer;transition:background .2s}
+  .item:hover{background:#ffffff14}
+  .item .n{flex:0 0 34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:800;font-size:14px;background:#ffffff14;color:var(--a)}
+  .item p{font-size:15px;line-height:1.45}
+  .badge{position:fixed;bottom:0;left:0;right:0;padding:12px 16px 18px;background:linear-gradient(0deg,var(--bg1) 60%,transparent);display:flex;justify-content:center}
+  .badge span{font-size:12px;color:var(--muted);background:var(--card);border:1px solid var(--line);padding:6px 12px;border-radius:999px}
+  .toast{position:fixed;top:16px;left:50%;transform:translate(-50%,-80px);background:#7cf29c;color:#06280f;font-weight:600;padding:10px 16px;border-radius:12px;transition:transform .3s;z-index:9}
+  .toast.show{transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="toast" id="toast">נשמר במועדפים ⭐</div>
+<div class="wrap">
+  <header>
+    <div class="logo">🚀</div>
+    <div>
+      <h1>טכנוג</h1>
+      <div class="sub">טיפ טכנולוגי חדש בכל יום</div>
+    </div>
+    <div class="streak"><b id="streak">🔥 1</b>ימים ברצף</div>
+  </header>
+
+  <section class="hero">
+    <span class="tag" id="heroCat">✨ הטיפ של היום</span>
+    <div class="num" id="heroNum">טיפ #1</div>
+    <div class="tip" id="heroTip"></div>
+    <div class="emoji" id="heroEmoji">💡</div>
+    <div class="row">
+      <button id="next">טיפ הבא ⬅️</button>
+      <button class="ghost" id="like">⭐ שמור</button>
+      <button class="ghost" id="rand">🎲 הפתע אותי</button>
+    </div>
+  </section>
+
+  <h2>כל הטיפים</h2>
+  <div class="cats" id="cats"></div>
+  <div class="list" id="list"></div>
+</div>
+<div class="badge"><span>טכנוג · גרסה 0.2</span></div>
+
+<script>
+const TIPS=[["וואטסאפ", "💬", "מישהו לא עונה? תיכנס לצ'אט שלו, תחזיק את האצבע על המיקרופון, תדבר ותעזוב. ההודעה הקולית תחכה לו."], ["וואטסאפ", "💬", "אימוג'י ענק: שלח אימוג'י אחד בלי מילים, והוא יוצא ענק!"], ["וואטסאפ", "💬", "למצוא הודעה ישנה: תלחץ על שם הצ'אט, אחר כך על חיפוש, ותכתוב מילה אחת מההודעה."], ["וואטסאפ", "💬", "להדגיש מילה: כתוב כוכבית לפני המילה ואחריה, והיא תצא מודגשת."], ["וואטסאפ", "⭐", "לשמור הודעה חשובה: תחזיק את האצבע על ההודעה ותלחץ על הכוכב. אחר כך תמצא אותה ב\"הודעות מסומנות בכוכב\"."], ["וואטסאפ", "💬", "לענות להודעה מסוימת: תחליק אותה ימינה עם האצבע, וכולם יראו למה אתה עונה."], ["וואטסאפ", "🔒", "להקליט הודעה קולית ארוכה בלי להחזיק: תחזיק על המיקרופון ותחליק למעלה למנעול."], ["וואטסאפ", "💬", "לשמוע הודעה קולית מהר יותר: לחץ על 1x שליד ההודעה, והיא תהיה פי 1.5 או פי 2."], ["וואטסאפ", "💬", "שלחת משהו בטעות? תחזיק על ההודעה, לחץ על הפח, ובחר \"מחק אצל כולם\"."], ["וואטסאפ", "💬", "טעית במילה? תחזיק על ההודעה ולחץ \"ערוך\". אפשר לתקן עד רבע שעה אחרי."], ["וואטסאפ", "😂", "להגיב בלי לכתוב: תחזיק על ההודעה ובחר אימוג'י."], ["וואטסאפ", "💬", "לכתוב באלכסון: שים קו תחתון לפני המילה ואחריה."], ["וואטסאפ", "💬", "לתייג חבר בקבוצה: כתוב @ ואז את השם שלו, והוא יקבל התראה."], ["וואטסאפ", "↪️", "להעביר הודעה מצחיקה לחבר: תחזיק עליה ולחץ על החץ."], ["וואטסאפ", "💬", "להעתיק טקסט: תחזיק על ההודעה ולחץ \"העתק\"."], ["וואטסאפ", "😊", "סטיקרים ו־GIF: לחץ על הפרצוף ליד מקום הכתיבה."], ["וואטסאפ", "✔️", "וי אחד = נשלח. שני וי אפורים = הגיע. שני וי כחולים = קראו!"], ["וואטסאפ", "💬", "בקבוצה, לראות מי קרא: תחזיק על ההודעה שלך ולחץ \"מידע\"."], ["וואטסאפ", "🔕", "קבוצה רועשת מדי? לחץ על שם הקבוצה ובחר \"השתק התראות\"."], ["וואטסאפ", "📌", "הצ'אט הכי חשוב תמיד למעלה: תחזיק עליו ברשימת הצ'אטים ולחץ על הנעץ."], ["וואטסאפ", "💬", "לשלוח הודעה לעצמך, כמו פנקס: חפש את השם שלך כשאתה פותח צ'אט חדש."], ["וואטסאפ", "📹", "שיחת וידאו: לחץ על המצלמה למעלה בצ'אט."], ["וואטסאפ", "💬", "לראות את כל התמונות מצ'אט אחד: לחץ על שם הצ'אט ואז \"מדיה\"."], ["וואטסאפ", "🌙", "מצב כהה, טוב לעיניים בלילה: הגדרות, צ'אטים, ערכת נושא, כהה."], ["וואטסאפ", "💬", "רקע חדש לצ'אט: הגדרות, צ'אטים, טפט."], ["וואטסאפ", "📦", "להסתיר צ'אט בלי למחוק: תחזיק עליו ולחץ \"ארכיון\"."], ["תמונות", "📎", "לעשות סקר בקבוצה: לחץ על המהדק ובחר \"סקר\". למשל: איזה פיצה מזמינים?"], ["תמונות", "✏️", "לצייר על תמונה לפני ששולחים: לחץ על העיפרון."], ["תמונות", "📸", "לכתוב על תמונה: לחץ על ה־T."], ["תמונות", "📸", "לשים סטיקר על תמונה: לחץ על הפרצוף בזמן העריכה."], ["תמונות", "📸", "לשלוח כמה תמונות ביחד: בגלריה, לחץ על כמה תמונות לפני השליחה."], ["תמונות", "🐶", "לחפש GIF מצחיק: בחלון ה־GIF, כתוב מילה כמו \"כלב\"."], ["תמונות", "📸", "להגדיל תמונה: שתי אצבעות על המסך, ולפתוח אותן."], ["תמונות", "🎤", "להקליד בלי ידיים: לחץ על המיקרופון במקלדת ותדבר, והמילים נכתבות לבד."], ["תמונות", "📸", "לענות מהר להודעה שקפצה למעלה במסך: לחץ עליה ולחץ \"השב\"."], ["תמונות", "📸", "צילום מסך: לחץ ביחד על כפתור הכיבוי ועל כפתור הנמכת הקול."], ["טלפון", "🔋", "הסוללה נגמרת? תחשיך קצת את המסך, וזה חוסך המון."], ["טלפון", "🔦", "פנס: החלק מלמעלה למטה במסך ולחץ על הפנס."], ["טלפון", "⏱️", "טיימר לשיעורי בית או למשחק: באפליקציית השעון, לחץ \"טיימר\"."], ["טלפון", "➗", "מחשבון מהיר: יש מחשבון בטלפון, שימושי לשיעורי חשבון."], ["טלפון", "📱", "לצלם וידאו מהר: במצלמה, תחזיק את הכפתור, וזה מצלם וידאו."], ["טלפון", "🔄", "צילום סלפי: לחץ על החצים המסתובבים במצלמה."], ["טלפון", "📱", "לחזור אחורה בטלפון: החלק מהצד של המסך פנימה, או לחץ על החץ."], ["טלפון", "📱", "לסגור אפליקציה שנתקעה: פתח את רשימת האפליקציות הפתוחות והחלק אותה למעלה."], ["טלפון", "✈️", "מצב טיסה גורם לטלפון להיטען מהר יותר."], ["טלפון", "📱", "להגדיל את האותיות בטלפון: הגדרות, תצוגה, גודל גופן."], ["ביטחון", "🛡️", "אף פעם לא נותנים לאף אחד את הקוד שוואטסאפ שולחת לך בהודעה. גם לא לחבר!"], ["ביטחון", "🛡️", "מישהו שאתה לא מכיר כותב לך? אל תענה, ותספר לאבא או לאמא."], ["ביטחון", "🎣", "קישור מוזר שאומר \"זכית בפרס\"? לא לוחצים! זה בדרך כלל תרגיל."], ["ביטחון", "🛡️", "לא שולחים את הכתובת של הבית, את הבית ספר או סיסמאות בוואטסאפ."], ["ביטחון", "🛡️", "מישהו מציק לך? תספר למבוגר, ואפשר גם לחסום אותו: לחץ על השם שלו ואז \"חסום\"."], ["ביטחון", "🙂", "לפני ששולחים תמונה של חבר, שואלים אותו אם זה בסדר."], ["ביטחון", "🛡️", "הודעה שמבקשת \"תעביר ל־10 חברים\"? לא מעבירים. זה סתם שרשרת."], ["ביטחון", "🧘", "כועס? חכה רגע לפני שאתה כותב. הודעה שנשלחה כבר נקראה."], ["ביטחון", "🔐", "סיסמה טובה היא ארוכה ומשונה, ולא שם או יום הולדת."], ["ביטחון", "❤️", "הטיפ הכי חשוב: אם משהו בטלפון מרגיש לא נעים, תמיד מותר לספר למבוגר."], ["וואטסאפ", "💬", "לקרוא הודעה בלי לפתוח את הצ'אט: תחזיק את האצבע על הצ'אט ברשימה, ותראה תצוגה מקדימה."], ["וואטסאפ", "⏳", "סטטוס: לחץ על \"עדכונים\" ותוכל לשים תמונה שנעלמת אחרי 24 שעות."], ["וואטסאפ", "💬", "לראות מתי מישהו היה מחובר: זה כתוב מתחת לשם שלו בראש הצ'אט."], ["וואטסאפ", "📎", "לשתף מיקום עם אבא או אמא: המהדק ואז \"מיקום\"."], ["וואטסאפ", "📎", "לשלוח איש קשר לחבר: המהדק ואז \"איש קשר\"."], ["וואטסאפ", "👂", "לשמוע הודעה קולית בשקט: תצמיד את הטלפון לאוזן, והיא תתנגן ברמקול של השיחות."], ["וואטסאפ", "💬", "לשלוח תמונה שנפתחת רק פעם אחת: לחץ על העיגול עם ה־1 לפני השליחה."], ["וואטסאפ", "💬", "לבחור כמה הודעות ביחד: תחזיק על הודעה אחת ואז תלחץ על עוד הודעות."], ["וואטסאפ", "👥", "ליצור קבוצה חדשה: לחץ על \"צ'אט חדש\" ואז \"קבוצה חדשה\"."], ["וואטסאפ", "💬", "לשנות את התמונה של הקבוצה: לחץ על שם הקבוצה ואז על התמונה שלה."], ["מחשב", "💻", "להעתיק: Ctrl ו־C ביחד. להדביק: Ctrl ו־V ביחד."], ["מחשב", "💻", "טעית? Ctrl ו־Z מחזיר אחורה, כמו מכונת זמן ⏪."], ["מחשב", "💻", "לשמור עבודה: Ctrl ו־S. כדאי ללחוץ על זה כל כמה דקות!"], ["מחשב", "💻", "להגדיל את מה שרואים במסך: Ctrl ועוד פלוס. להקטין: Ctrl ומינוס."], ["מחשב", "💻", "לחפש מילה בדף: Ctrl ו־F."], ["מחשב", "💻", "לעבור בין חלונות: Alt ו־Tab."], ["מחשב", "💻", "לכתוב אות גדולה באנגלית: תחזיק Shift ותלחץ על האות."], ["מחשב", "💻", "להחליף שפה בין עברית לאנגלית: Alt ו־Shift ביחד."], ["מחשב", "📸", "צילום מסך במחשב: מקש Windows, Shift ו־S ביחד."], ["מחשב", "💻", "בדפדפן: Ctrl ו־T פותח לשונית חדשה, Ctrl ו־W סוגר אותה."], ["עובדות", "🚀", "הטלפון שלך חזק יותר מהמחשבים ששלחו אנשים לירח ב־1969."], ["עובדות", "🐛", "המילה \"באג\" (תקלה במחשב) נולדה בגלל עש אמיתי שנתקע בתוך מחשב ענק."], ["עובדות", "🤓", "המחשבים הראשונים היו גדולים כמו חדר שלם!"], ["עובדות", "😂", "האימוג'י הכי נשלח בעולם הוא כנראה."], ["עובדות", "🌊", "אינטרנט עובר בין יבשות בכבלים ענקיים בקרקעית הים."], ["עובדות", "🔴", "המצלמה של הטלפון שלך יכולה לראות אור של שלט רחוק, שהעין לא רואה. נסה לצלם שלט כשלוחצים עליו!"], ["עובדות", "🤓", "יש יותר טלפונים בעולם מאשר אנשים!"], ["עובדות", "🤓", "המחשב \"חושב\" רק באפס ואחד. ככה הוא כותב הכל, אפילו סרטונים."], ["עובדות", "🤓", "המקלדת מסודרת כמו שהיא, QWERTY, מימי מכונות הכתיבה הישנות ⌨️."], ["עובדות", "🤖", "רובוט הוא בעצם מחשב עם ידיים, גלגלים או רגליים."], ["טלפון", "📱", "להגיד לטלפון \"היי גוגל\" או \"היי סירי\" ולשאול שאלה, בלי לגעת בו."], ["טלפון", "🔍", "לחפש תמונה בטלפון לפי מה שיש בה: כתוב בגלריה \"כלב\" או \"ים\"."], ["טלפון", "🎨", "ציור עם האצבע: יש אפליקציות ציור בחינם, ואפשר לצייר על כל המסך."], ["טלפון", "🌙", "מצב \"נא לא להפריע\": הטלפון לא יצלצל כשאתה ישן או לומד."], ["טלפון", "📱", "לסובב את המסך: הפוך את הטלפון לרוחב כשאתה רואה סרטון."], ["טלפון", "📱", "לנעול את הסיבוב: בתפריט מלמעלה, לחץ על הסמל של המסך המסתובב."], ["טלפון", "🔉", "להוריד את הקול מהר: כפתור הנמכת הקול בצד הטלפון."], ["טלפון", "🎙️", "להקליט את הקול שלך: באפליקציית \"הקלטות קול\"."], ["טלפון", "🎵", "לשים מוזיקה בזמן שעושים שיעורי בית: תוריד קצת את הווליום, שלא יפריע."], ["טלפון", "👀", "להפסקה טובה לעיניים: כל 20 דקות של מסך, תסתכל רחוק 20 שניות."], ["ממציאים", "💡", "כל אפליקציה התחילה מרעיון קטן, בדיוק כמו טכנוג!"], ["ממציאים", "📝", "ממציאים כותבים כל רעיון במחברת או בהודעה לעצמם, כדי לא לשכוח."], ["ממציאים", "🧩", "סקראץ' ג'וניור: משחק לבנות משחקים מקוביות צבעוניות (עם עזרה של מבוגר)."], ["ממציאים", "💡", "קוד הוא שפה, כמו עברית, רק שמדברים בה עם מחשבים."], ["ממציאים", "🐛", "לטעות זה חלק מלהמציא. גם מתכנתים גדולים מתקנים באגים כל יום."], ["ממציאים", "✏️", "לפני שבונים אפליקציה מציירים אותה על דף: איך היא תיראה ומה יהיה בכל כפתור."], ["ממציאים", "💡", "אפשר לבקש מחבר לנסות את הרעיון שלך ולהגיד מה הוא חושב."], ["ממציאים", "🦸", "סקרנות היא כוח על: כל \"איך זה עובד?\" הוא התחלה של המצאה."], ["ממציאים", "💡", "הרבה ממציאים מפורסמים התחילו כשהיו ילדים, בדיוק כמוך!"], ["ממציאים", "❤️", "ותמיד: ממציאים טובים משתפים את ההורים ברעיונות שלהם."]];
+const CAT_ICON={"הכל":"🌈","וואטסאפ":"💬","טלפון":"📱","מחשב":"💻","עובדות":"🤓","תמונות":"📸","ביטחון":"🛡️","ממציאים":"💡"};
+let cur=0, cat="הכל";
+const $=id=>document.getElementById(id);
+let liked=new Set();
+try{liked=new Set(JSON.parse(localStorage.getItem("tg-liked")||"[]"))}catch(e){}
+function show(i){
+  cur=(i+TIPS.length)%TIPS.length;
+  const [c,e,t]=TIPS[cur];
+  $("heroTip").textContent=t; $("heroEmoji").textContent=e;
+  $("heroNum").textContent="טיפ #"+(cur+1)+" מתוך "+TIPS.length;
+  $("heroCat").textContent=(CAT_ICON[c]||"✨")+" "+c;
+  $("like").className=liked.has(cur)?"liked":"ghost";
+  $("like").textContent=liked.has(cur)?"⭐ שמור!":"⭐ שמור";
+}
+function renderCats(){
+  $("cats").innerHTML="";
+  Object.keys(CAT_ICON).forEach(k=>{
+    const b=document.createElement("div");
+    b.className="cat"+(k===cat?" on":""); b.textContent=CAT_ICON[k]+" "+k;
+    b.onclick=()=>{cat=k;renderCats();renderList()};
+    $("cats").appendChild(b);
+  });
+}
+function renderList(){
+  $("list").innerHTML="";
+  TIPS.forEach(([c,e,t],i)=>{
+    if(cat!=="הכל"&&c!==cat)return;
+    const d=document.createElement("div"); d.className="item";
+    d.innerHTML='<div class="n">'+(i+1)+'</div><p></p>';
+    d.querySelector("p").textContent=e+" "+t;
+    d.onclick=()=>{show(i);window.scrollTo({top:0,behavior:"smooth"})};
+    $("list").appendChild(d);
+  });
+}
+$("next").onclick=()=>show(cur+1);
+$("rand").onclick=()=>show(Math.floor(Math.random()*TIPS.length));
+$("like").onclick=()=>{
+  if(liked.has(cur))liked.delete(cur);else{liked.add(cur);const t=$("toast");t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1400)}
+  try{localStorage.setItem("tg-liked",JSON.stringify([...liked]))}catch(e){}
+  show(cur);
+};
+const day=Math.floor(Date.now()/864e5); show(day%TIPS.length);
+renderCats(); renderList();
+</script>
+</body>
+</html>
